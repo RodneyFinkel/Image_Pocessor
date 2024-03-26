@@ -17,9 +17,9 @@ pipe = pipeline("text-generation", model=model, torch_dtype=torch.bfloat16, devi
 # We use the tokenizer's chat template to format each message - see https://huggingface.co/docs/transformers/main/en/chat_templating
 
 
-def Image_to_JSON(image_path):
+def Image_to_JSON(img_path):
     # Perform OCR on the image and extract the text content
-    result = ocr.ocr(image_path, cls=True)
+    result = ocr.ocr(img_path, cls=True)
 
     ocr_string = ""  # Stores the OCR content extracted from the image in a string which can be fed into ChatGPT
 
@@ -27,10 +27,13 @@ def Image_to_JSON(image_path):
     for i in range(len(result[0])):
         ocr_string = ocr_string + result[0][i][1][0] + " "
 
+    print("OCR Result:", ocr_string)
+
+
     messages = [
     {
         "role": "system",
-        "content": "You are a JSON converter which receives bank statement OCR information as a string and returns a structured JSON output by organising the information in the string.",
+        "content": "You are a JSON converter which receives raw boarding pass OCR information as a string and returns a structured JSON output by organising the information in the string.",
     },
     {"role": "user", "content": f"Extract the name of the passenger, name of the airline, Flight number, City of Departure, City of Arrival, Date of Departure from this OCR data: {ocr_string}"},
     ]
@@ -39,3 +42,6 @@ def Image_to_JSON(image_path):
     outputs = pipe(prompt, max_new_tokens=1000, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
     print(outputs[0]["generated_text"])
     return outputs[0]["generated_text"]
+
+if __name__ == "__main__":
+    Image_to_JSON(img_path)

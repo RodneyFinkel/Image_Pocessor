@@ -8,6 +8,8 @@ pip install accelerate
 
 git clone https://github.com/PaddlePaddle/PaddleOCR.git
 
+https://github.com/PaddlePaddle/PaddleOCR
+
 pip install paddlepaddle
 from paddleocr import PaddleOCR
 
