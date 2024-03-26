@@ -1,17 +1,20 @@
 import torch
 from paddleocr import PaddleOCR
-from transformers import pipeline
+from transformers import AutoModelForCausalLM, pipeline
 
 ocr = PaddleOCR(use_angle_cls=True, lang='en',use_space_char=True,show_log=False,enable_mkldnn=True)
-img_path = 'data/IMG_3503'
-pipe = pipeline("text-generation", model="HuggingFaceH4/zephyr-7b-alpha", torch_dtype=torch.bfloat16, device_map="auto")
+img_path = 'data/singapore.jpg'
+model_name = "HuggingFaceH4/zephyr-7b-alpha"
+
+# Using the diskoffload function:
+model = AutoModelForCausalLM.from_pretrained(model_name)
+pipe = pipeline("text-generation", model=model, torch_dtype=torch.bfloat16, device_map="auto")
+
 
 # Each message can have 1 of 3 roles: "system" (to provide initial instructions), "user", or "assistant". 
 # For inference, make sure "user" is the role in the final message.
 
 # We use the tokenizer's chat template to format each message - see https://huggingface.co/docs/transformers/main/en/chat_templating
-
-
 
 
 def Image_to_JSON(image_path):
@@ -29,7 +32,7 @@ def Image_to_JSON(image_path):
         "role": "system",
         "content": "You are a JSON converter which receives bank statement OCR information as a string and returns a structured JSON output by organising the information in the string.",
     },
-    {"role": "user", "content": f"Extract the name of the account name, account number, date, payment type and details from this OCR data: {ocr_string}"},
+    {"role": "user", "content": f"Extract the name of the passenger, name of the airline, Flight number, City of Departure, City of Arrival, Date of Departure from this OCR data: {ocr_string}"},
     ]
     # We use the tokenizer's chat template to format each message - see https://huggingface.co/docs/transformers/main/en/chat_templating
     prompt = pipe.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
