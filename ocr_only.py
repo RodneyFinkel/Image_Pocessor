@@ -15,11 +15,9 @@ ocr_string = ""
 for i in range(len(result[0])):
     ocr_string = ocr_string + result[0][i][1][0] + " "
 
-model_name = "gpt2"
-pipe = pipeline("text-generation", model=model_name, device=0)
-
 # Define a regular expression pattern to extract relevant information
-pattern = r"(\b[A-Z][A-Z\s]+)\b"
+pattern = r"(\b[A-Za-z0-9\s]+)\b"
+pattern2 = r"(\b[A-Z][A-Z\s]+)\b"
 
 # Find matches using the pattern
 matches = re.findall(pattern, ocr_string)
@@ -40,7 +38,7 @@ json_data = {
     "departure_city": departure_city,
     "arrival_city": arrival_city,
     "departure_date": departure_date,
-    "generated_text": outputs[0]["generated_text"]  # Add generated text if needed
+ #   "generated_text": outputs[0]["generated_text"]  # Add generated text if needed
 }
 
 # Define the path to the JSON file
