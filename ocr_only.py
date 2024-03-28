@@ -15,13 +15,13 @@ ocr_string = ""
 for i in range(len(result[0])):
     ocr_string = ocr_string + result[0][i][1][0] + " "
 
+print(ocr_string)
+
 # Define a regular expression pattern to extract relevant information
 pattern = r"(\b[A-Za-z0-9\s]+)\b"
 pattern2 = r"(\b[A-Z][A-Z\s]+)\b"
 pattern3 = r"(\b[A-Z0-9\s]+)\b"
-pattern4 = r"(Passenger Name:|Flight:|From:|To:|Date:|Boarding Time:|Airline Name:)\s*([^\n]+)"
-
-
+pattern4 = r"((?:\b[A-Z][A-Z\s]+\b)|(?:Flight: ([^\n]+))|(?:From: ([^\n]+))|(?:To: ([^\n]+))|(?:Date: ([^\n]+))|(?:Boarding time: ([^\n]+))|(?:Airline Name: ([^\n]+)))"
 
 # Find matches using the pattern
 matches = re.findall(pattern4, ocr_string)
@@ -34,6 +34,22 @@ To = matches[3]
 Date = matches[4]
 Boarding_Time = matches[5]
 airline_name = matches[6]
+
+for match in matches:
+    if match[0]:
+        passenger_name = match[0]
+    elif "Flight:" in match[1]:
+        Flight = match[1].split(":")[1].strip()
+    elif "From:" in match[1]:
+        From = match[1].split(":")[1].strip()
+    elif "To:" in match[1]:
+        To = match[1].split(":")[1].strip()
+    elif "Date:" in match[1]:
+        Date = match[1].split(":")[1].strip()
+    elif "Boarding Time:" in match[1]:
+        Boarding_Time = match[1].split(":")[1].strip()
+    elif "Airline Name:" in match[1]:
+        airline_name = match[1].split(":")[1].strip()
 
 # Create a JSON object with the extracted information
 json_data = {
