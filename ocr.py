@@ -14,13 +14,13 @@ ocr_string = ""
 for i in range(len(result[0])):
     ocr_string = ocr_string + result[0][i][1][0] + " "
 
-pprintpp.pprint(ocr_string)
+# pprintpp.pprint(ocr_string)
 
 model_name = "HuggingFaceH4/zephyr-7b-alpha"
 print(model_name)
 
 pipe = pipeline("text-generation", model=model_name, torch_dtype=torch.bfloat16, device_map="auto")
-
+print("checking pipeline function")
 
 # Each message can have 1 of 3 roles: "system" (to provide initial instructions), "user", or "assistant". For inference, make sure "user" is the role in the final message.
 messages = [
@@ -32,6 +32,9 @@ messages = [
 ]
 # We use the tokenizer's chat template to format each message - see https://huggingface.co/docs/transformers/main/en/chat_templating
 
+print("prompt message dict defined")
 prompt = pipe.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-outputs = pipe(prompt, max_new_tokens=1000, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
+print("post prompt call")
+outputs = pipe(prompt, max_new_tokens=50, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
+print("post outputs call")
 print(outputs[0]["generated_text"])
