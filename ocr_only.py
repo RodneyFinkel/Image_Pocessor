@@ -18,9 +18,13 @@ for i in range(len(result[0])):
 # Define a regular expression pattern to extract relevant information
 pattern = r"(\b[A-Za-z0-9\s]+)\b"
 pattern2 = r"(\b[A-Z][A-Z\s]+)\b"
+pattern3 = r"(\b[A-Z0-9\s]+)\b"
+pattern4 = r"(Passenger Name:|Flight Number:|Departure City:|Arrival City:|Departure Time:|Arrival Time:)\s*([^\n]+)"
+
+
 
 # Find matches using the pattern
-matches = re.findall(pattern, ocr_string)
+matches = re.findall(pattern4, ocr_string)
 
 # Extracted information
 passenger_name = matches[0]
