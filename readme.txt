@@ -16,6 +16,3 @@ from paddleocr import PaddleOCR
 python3 -m pip install paddlepaddle-gpu
 pip install "paddleocr>=2.0.1"
 
-
-Reference:
-https://medium.com/@sureshraghu0706/from-images-to-insights-3-tiered-data-extraction-from-images-with-ocr-and-large-language-models-0c07754813cc
