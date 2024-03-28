@@ -19,7 +19,7 @@ for i in range(len(result[0])):
 pattern = r"(\b[A-Za-z0-9\s]+)\b"
 pattern2 = r"(\b[A-Z][A-Z\s]+)\b"
 pattern3 = r"(\b[A-Z0-9\s]+)\b"
-pattern4 = r"(Passenger Name:|Flight Number:|Departure City:|Arrival City:|Departure Time:|Arrival Time:)\s*([^\n]+)"
+pattern4 = r"(Passenger Name:|Flight:|From:|To:|Date:|Boarding Time:|Airline Name:)\s*([^\n]+)"
 
 
 
@@ -28,20 +28,22 @@ matches = re.findall(pattern4, ocr_string)
 
 # Extracted information
 passenger_name = matches[0]
-airline_name = matches[1]
-flight_number = matches[2]
-departure_city = matches[3]
-arrival_city = matches[4]
-departure_date = matches[5]
+Flight = matches[1]
+From = matches[2]
+To = matches[3]
+Date = matches[4]
+Boarding_Time = matches[5]
+airline_name = matches[6]
 
 # Create a JSON object with the extracted information
 json_data = {
     "passenger_name": passenger_name,
     "airline_name": airline_name,
-    "flight_number": flight_number,
-    "departure_city": departure_city,
-    "arrival_city": arrival_city,
-    "departure_date": departure_date,
+    "flight_number": Flight,
+    "departure_city": From,
+    "arrival_city": To,
+    "departure_date": Date,
+    "boarding_time": Boarding_Time
  #   "generated_text": outputs[0]["generated_text"]  # Add generated text if needed
 }
 
