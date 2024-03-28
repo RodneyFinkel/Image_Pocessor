@@ -6,8 +6,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # Initialize PaddleOCR
 ocr = PaddleOCR(use_angle_cls=True, lang='en', use_space_char=True, show_log=False, enable_mkldnn=True)
-
-# Path to the image file for OCR processing
 img_path = 'data/singapore.jpg'
 
 # Perform OCR on the image
@@ -18,9 +16,8 @@ ocr_string = ""
 for i in range(len(result[0])):
     ocr_string = ocr_string + result[0][i][1][0] + " "
 
-# Print the OCR result
-print("OCR String:", ocr_string)
-
+# print("OCR String:", ocr_string)
+##############################################################################
 # Initialize Google Sheets credentials
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
@@ -42,3 +39,5 @@ worksheet.update('A1', ocr_string)
 # Save the OCR string to a text file
 with open('ocr_text.txt', 'w') as file:
     file.write(ocr_string)
+
+##########################################################################################################

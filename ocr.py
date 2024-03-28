@@ -1,8 +1,9 @@
+import json
+import os
 import torch
 from paddleocr import PaddleOCR
 from transformers import pipeline
 import pprintpp
-
 
 ocr = PaddleOCR(use_angle_cls=True, lang='en',use_space_char=True,show_log=False,enable_mkldnn=True)
 
@@ -18,7 +19,6 @@ for i in range(len(result[0])):
 
 model_name = "HuggingFaceH4/zephyr-7b-alpha"
 print(model_name)
-
 pipe = pipeline("text-generation", model=model_name, torch_dtype=torch.bfloat16, device_map="auto")
 print("checking pipeline function")
 
@@ -38,3 +38,19 @@ print("post prompt call")
 outputs = pipe(prompt, max_new_tokens=50, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
 print("post outputs call")
 print(outputs[0]["generated_text"])
+
+# create a JSON object
+json_data = {
+    "ocr_data": ocr_string,
+    "generated_text": outputs[0]["generated_text"]
+}
+
+# define the path to the JSON file
+json_file_path = os.path.join(os.path.dirname(__file__), "data", "output.json")
+
+# Write JSON data to file
+with open(json_file_path, "w") as json_file:
+    json.dump(json_data, json_file)
+
+print(f"JSON file save to: {json_file_path}")
+
