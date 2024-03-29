@@ -7,7 +7,7 @@ import pprintpp
 
 ocr = PaddleOCR(use_angle_cls=True, lang='en',use_space_char=True,show_log=False,enable_mkldnn=True)
 
-img_path = 'data/singapore.jpg'
+img_path = 'data/IMG_3503.jpg'
 result = ocr.ocr(img_path, cls=True)
 
 ocr_string = ""
@@ -15,7 +15,7 @@ ocr_string = ""
 for i in range(len(result[0])):
     ocr_string = ocr_string + result[0][i][1][0] + " "
 
-# pprintpp.pprint(ocr_string)
+pprintpp.pprint(ocr_string)
 
 model_name = "HuggingFaceH4/zephyr-7b-alpha"
 print(model_name)
@@ -26,9 +26,9 @@ print("checking pipeline function")
 messages = [
     {
         "role": "system",
-        "content": "You are a JSON converter which receives raw boarding pass OCR information as a string and returns a structured JSON output by organising the information in the string.",
+        "content": "You are a JSON converter which receives raw bank statement OCR information as a string and returns a structured JSON output by organising the information in the string.",
     },
-    {"role": "user", "content": f"Extract the name of the passenger, name of the airline, Flight number, City of Departure, City of Arrival, Date of Departure from this OCR data: {ocr_string}"},
+    {"role": "user", "content": f"Extract the name of the bank, Account Name, SortCode, Account Number, Date, Payment type and details, Paid out from this OCR data: {ocr_string}"},
 ]
 # We use the tokenizer's chat template to format each message - see https://huggingface.co/docs/transformers/main/en/chat_templating
 
