@@ -12,12 +12,14 @@ result = ocr.ocr(img_path, cls=True)
 
 ocr_string = ""
 # Extract the text from the OCR result and concatenate it to ocr_string
-for i in range(len(result[0])):
-    ocr_string = ocr_string + result[0][i][1][0] + " "
+# for i in range(len(result[0])):
+#     ocr_string = ocr_string + result[0][i][1][0] + " "
+
+ocr_string = " ".join([word[1][0] for line in result for word in line])
 
 pprintpp.pprint(ocr_string)
 
-model_name = "HuggingFaceH4/zephyr-7b-alpha"
+model_name = "HuggingFaceH4/zephyr-7b-beta"
 print(model_name)
 pipe = pipeline("text-generation", model=model_name, torch_dtype=torch.bfloat16, device_map="auto")
 print("checking pipeline function")
