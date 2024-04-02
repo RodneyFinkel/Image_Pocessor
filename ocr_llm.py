@@ -54,5 +54,6 @@ json_file_path = os.path.join(os.path.dirname(__file__), "data", "output.json")
 with open(json_file_path, "w") as json_file:
     json.dump(json_data, json_file)
 
+print(json.dumps(json_data, indent=4))
 print(f"JSON file save to: {json_file_path}")
 

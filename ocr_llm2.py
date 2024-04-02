@@ -8,7 +8,7 @@ import pprintpp
 
 ocr = PaddleOCR(use_angle_cls=True, lang='en', use_space_char=True, show_log=False, enable_mkldnn=True)
 
-img_path = 'data/IMG_3503.jpg'
+img_path = 'data/IMG_3504.jpg'
 result = ocr.ocr(img_path, cls=True)
 
 # Initialize variables to store extracted information
