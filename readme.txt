@@ -6,7 +6,7 @@ pip install accelerate
 
 # Pre-requisite libraries for PaddleOCR
 
-git clone https://github.com/PaddlePaddle/PaddleOCR.git
+!git clone https://github.com/PaddlePaddle/PaddleOCR.git
 
 https://github.com/PaddlePaddle/PaddleOCR
 
